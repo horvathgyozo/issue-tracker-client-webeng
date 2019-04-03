@@ -2,9 +2,35 @@
 <div class="container">
   <h2 class="display-2 my-3">My issues</h2>
   <p><a class="btn btn-primary" href="#" role="button">New issue</a></p>
-  <div class="list-group">
 
-    <a *ngFor="let issue of issues"
+  <form [formGroup]="radioGroupForm">
+    <div
+      class="btn-group btn-group-toggle"
+      ngbRadioGroup
+      name="radioBasic"
+      formControlName="status"
+      (change)="handleChange()"
+    >
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="ALL" /> All
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="NEW" /> New
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="DOING" /> Doing
+      </label>
+      <label ngbButtonLabel class="btn-primary">
+        <input ngbButton type="radio" value="DONE" /> Done
+      </label>
+    </div>
+  </form>
+  <hr />
+  <pre>{{ radioGroupForm.value["status"] }}</pre>
+
+  <div class="list-group">
+    <a
+      *ngFor="let issue of filteredIssues"
       href="#"
       class="list-group-item list-group-item-action"
       [class.list-group-item-danger]="issue.status === 'NEW'"
@@ -16,7 +42,7 @@
         <span class="badge badge-danger">{{ issue.status }}</span>
       </div>
       <p class="mb-1">
-          {{ issue.description }}
+        {{ issue.description }}
       </p>
       <small>
         <i class="fas fa-map-marker-alt"></i> {{ issue.place }}
@@ -25,6 +51,5 @@
         <span class="badge badge-light badge-pill">3</span>
       </small>
     </a>
-
   </div>
 </div>
