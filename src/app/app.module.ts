@@ -9,6 +9,7 @@ import { IssueListComponent } from './issue-list/issue-list.component';
 import { IssueDetailComponent } from './issue-detail/issue-detail.component';
 import { IssueFormComponent } from './issue-form/issue-form.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { StatusFilterComponent } from './status-filter/status-filter.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MainPageComponent,
     IssueListComponent,
     IssueDetailComponent,
-    IssueFormComponent
+    IssueFormComponent,
+    StatusFilterComponent
   ],
   imports: [
     NgbModule,

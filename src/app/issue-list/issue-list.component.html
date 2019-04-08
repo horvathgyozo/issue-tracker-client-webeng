@@ -1,32 +1,9 @@
 <!-- Issue list page -->
 <div class="container">
   <h2 class="display-2 my-3">My issues</h2>
-  <p><a class="btn btn-primary" href="#" role="button">New issue</a></p>
+  <p><a class="btn btn-primary" routerLink="/issues/new" role="button">New issue</a></p>
 
-  <form [formGroup]="radioGroupForm">
-    <div
-      class="btn-group btn-group-toggle"
-      ngbRadioGroup
-      name="radioBasic"
-      formControlName="status"
-      (change)="handleChange()"
-    >
-      <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" value="ALL" /> All
-      </label>
-      <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" value="NEW" /> New
-      </label>
-      <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" value="DOING" /> Doing
-      </label>
-      <label ngbButtonLabel class="btn-primary">
-        <input ngbButton type="radio" value="DONE" /> Done
-      </label>
-    </div>
-  </form>
-  <hr />
-  <pre>{{ radioGroupForm.value["status"] }}</pre>
+  <app-status-filter [status]="status" (statusChange)="handleStatusChange($event)"></app-status-filter>
 
   <div class="list-group">
     <a
@@ -39,7 +16,11 @@
     >
       <div class="d-flex w-100 justify-content-between align-items-center">
         <h5 class="mb-1">{{ issue.title }}</h5>
-        <span class="badge badge-danger">{{ issue.status }}</span>
+        <span class="badge"
+          [class.badge-danger]="issue.status === 'NEW'"
+          [class.badge-warning]="issue.status === 'DOING'"
+          [class.badge-success]="issue.status === 'DONE'"
+        >{{ issue.status }}</span>
       </div>
       <p class="mb-1">
         {{ issue.description }}

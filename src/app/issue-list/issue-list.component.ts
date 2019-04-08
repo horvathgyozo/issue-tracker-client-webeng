@@ -16,21 +16,17 @@ export class IssueListComponent implements OnInit {
     { id: 4, title: 'issue4', description: 'desc4', place: 'place4', status: 'DOING' },
   ];
   filteredIssues: Issue[] = [];
+  status = 'ALL';
 
-  public radioGroupForm: FormGroup;
-
-  constructor(private formBuilder: FormBuilder) {}
+  constructor() {}
 
   ngOnInit() {
-    this.radioGroupForm = this.formBuilder.group({
-      status: 'ALL'
-    });
-    this.filterIssues('ALL');
+    this.filterIssues(this.status);
   }
 
-  handleChange() {
+  handleStatusChange(status: string) {
     // console.log(this.radioGroupForm.value.status);
-    this.filterIssues(this.radioGroupForm.value.status);
+    this.filterIssues(status);
   }
 
   filterIssues(filter) {
