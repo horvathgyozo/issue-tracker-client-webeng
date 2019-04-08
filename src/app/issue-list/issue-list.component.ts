@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Issue } from '../issue';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { IssueService } from '../issue.service';
 
 @Component({
   selector: 'app-issue-list',
@@ -9,19 +10,15 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class IssueListComponent implements OnInit {
 
-  issues: Issue[] = [
-    { id: 1, title: 'issue1', description: 'desc1', place: 'PC1', status: 'NEW' },
-    { id: 2, title: 'issue2', description: 'desc2', place: 'PC2', status: 'DOING' },
-    { id: 3, title: 'issue3', description: 'desc3', place: 'PC3', status: 'DONE' },
-    { id: 4, title: 'issue4', description: 'desc4', place: 'PC4', status: 'DOING' },
-  ];
+  issues: Issue[];
   filteredIssues: Issue[] = [];
   status = 'ALL';
   selectedIssue: Issue;
 
-  constructor() {}
+  constructor(private issueService: IssueService) {}
 
   ngOnInit() {
+    this.issues = this.issueService.getIssues();
     this.filterIssues(this.status);
   }
 
@@ -36,8 +33,8 @@ export class IssueListComponent implements OnInit {
       : this.issues.filter(issue => issue.status === filter);
   }
 
-  selectIssue(issue: Issue) {
-    this.selectedIssue = issue;
+  handleFormSubmit(formData) {
+    Object.assign(this.selectedIssue, formData);
+    this.selectedIssue = null;
   }
-
 }

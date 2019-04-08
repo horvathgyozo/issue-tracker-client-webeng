@@ -9,10 +9,13 @@
 
       <div class="list-group">
         <a *ngFor="let issue of filteredIssues" class="list-group-item list-group-item-action"
-          (click)="selectIssue(issue)"
+          (click)="selectedIssue = issue"
+          [class.selected]="issue === selectedIssue"
           [class.list-group-item-danger]="issue.status === 'NEW'"
           [class.list-group-item-warning]="issue.status === 'DOING'"
-          [class.list-group-item-success]="issue.status === 'DONE'">
+          [class.list-group-item-success]="issue.status === 'DONE'"
+          [routerLink]="['/issues', issue.id, 'edit']"
+        >
           <div class="d-flex w-100 justify-content-between align-items-center">
             <h5 class="mb-1">{{ issue.title }}</h5>
             <span class="badge" [class.badge-danger]="issue.status === 'NEW'"
@@ -33,7 +36,7 @@
     </div>
 
     <div class="col" *ngIf="selectedIssue">
-      <app-issue-form [issue]="selectedIssue"></app-issue-form>
+      <app-issue-form [issue]="selectedIssue" (save)="handleFormSubmit($event)"></app-issue-form>
     </div>
   </div>
 </div>

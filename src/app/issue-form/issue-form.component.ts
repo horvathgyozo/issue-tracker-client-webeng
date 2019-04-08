@@ -34,8 +34,8 @@ export class IssueFormComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    const emittedIssue = Object.assign(this.issue, this.form.value);
-    this.save.emit(emittedIssue);
+    // const emittedIssue = Object.assign(this.issue, this.form.value);
+    this.save.emit(this.form.value);
   }
 
 }
