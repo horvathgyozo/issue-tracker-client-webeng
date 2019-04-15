@@ -1,10 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Issue } from './issue';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 
+    'Content-Type': 'application/json',
+    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ=', // admin/password
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class IssueService {
+
+  private issueUrl = '/api/issues';
 
   issues: Issue[] = [
     { id: 1, title: 'issue1', description: 'desc1', place: 'PC1', status: 'NEW' },
@@ -13,10 +23,12 @@ export class IssueService {
     { id: 4, title: 'issue4', description: 'desc4', place: 'PC4', status: 'DOING' },
   ];
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  getIssues(): Issue[] {
-    return this.issues;
+  getIssues(): Promise<Issue[]> {
+    return this.http.get<Issue[]>(this.issueUrl).toPromise();
   }
 
   getIssue(id: number): Issue {
