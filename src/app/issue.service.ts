@@ -22,4 +22,17 @@ export class IssueService {
   getIssue(id: number): Issue {
     return this.issues.find(i => i.id === id);
   }
+
+  addIssue(formData) {
+    const newIssue = Object.assign(new Issue(), formData);
+    newIssue.id = this.issues.length + 1;
+    this.issues.push(newIssue);
+    return newIssue;
+  }
+
+  modifyIssue(id: number, formData) {
+    const issue = this.issues.find(iss => iss.id === id)
+    Object.assign(issue, formData);
+    return issue;
+  }
 }
