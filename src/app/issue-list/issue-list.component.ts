@@ -18,8 +18,12 @@ export class IssueListComponent implements OnInit {
   constructor(private issueService: IssueService) {}
 
   async ngOnInit() {
-    this.issues = await this.issueService.getIssues();
-    this.filterIssues(this.status);
+    try {
+      this.issues = await this.issueService.getIssues();
+      this.filterIssues(this.status);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   handleStatusChange(status: string) {

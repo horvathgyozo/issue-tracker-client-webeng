@@ -5,7 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
-    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ=', // admin/password
+    // 'Authorization': 'Basic dXNlcjI6cGFzc3dvcmQ=', // admin/password
+    'X-Requested-With': 'XMLHttpRequest'
   })
 };
 
@@ -28,7 +29,7 @@ export class IssueService {
   ) { }
 
   getIssues(): Promise<Issue[]> {
-    return this.http.get<Issue[]>(this.issueUrl).toPromise();
+    return this.http.get<Issue[]>(this.issueUrl, httpOptions).toPromise();
   }
 
   getIssue(id: number): Issue {
