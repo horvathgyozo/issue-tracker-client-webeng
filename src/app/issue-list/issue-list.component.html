@@ -14,7 +14,7 @@
           [class.list-group-item-danger]="issue.status === 'NEW'"
           [class.list-group-item-warning]="issue.status === 'DOING'"
           [class.list-group-item-success]="issue.status === 'DONE'"
-          [routerLink]="['/issues', issue.id, 'edit']"
+          [routerLink]="['/issues', issue.id]"
         >
           <div class="d-flex w-100 justify-content-between align-items-center">
             <h5 class="mb-1">{{ issue.title }}</h5>

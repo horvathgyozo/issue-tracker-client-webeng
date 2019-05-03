@@ -5,7 +5,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({ 
     'Content-Type': 'application/json',
-    // 'Authorization': 'Basic dXNlcjI6cGFzc3dvcmQ=', // admin/password
     'X-Requested-With': 'XMLHttpRequest'
   })
 };
@@ -17,13 +16,6 @@ export class IssueService {
 
   private issueUrl = '/api/issues';
 
-  issues: Issue[] = [
-    { id: 1, title: 'issue1', description: 'desc1', place: 'PC1', status: 'NEW' },
-    { id: 2, title: 'issue2', description: 'desc2', place: 'PC2', status: 'DOING' },
-    { id: 3, title: 'issue3', description: 'desc3', place: 'PC3', status: 'DONE' },
-    { id: 4, title: 'issue4', description: 'desc4', place: 'PC4', status: 'DOING' },
-  ];
-
   constructor(
     private http: HttpClient
   ) { }
@@ -32,20 +24,19 @@ export class IssueService {
     return this.http.get<Issue[]>(this.issueUrl, httpOptions).toPromise();
   }
 
-  getIssue(id: number): Issue {
-    return this.issues.find(i => i.id === id);
+  getIssue(id: number): Promise<Issue> {
+    return this.http.get<Issue>(`${this.issueUrl}/${id}`, httpOptions).toPromise();
   }
 
-  addIssue(formData) {
-    const newIssue = Object.assign(new Issue(), formData);
-    newIssue.id = this.issues.length + 1;
-    this.issues.push(newIssue);
-    return newIssue;
+  addIssue(formData): Promise<Issue> {
+    return this.http.post<Issue>(this.issueUrl, formData, httpOptions).toPromise();
   }
 
-  modifyIssue(id: number, formData) {
-    const issue = this.issues.find(iss => iss.id === id)
-    Object.assign(issue, formData);
-    return issue;
+  modifyIssue(id: number, formData): Promise<Issue> {
+    return this.http.put<Issue>(`${this.issueUrl}/${id}`, formData, httpOptions).toPromise();
+  }
+
+  deleteIssue(id: number) {
+    return this.http.delete(`${this.issueUrl}/${id}`, httpOptions).toPromise();
   }
 }
