@@ -13,6 +13,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { StatusFilterComponent } from './status-filter/status-filter.component';
 import { IssueEditComponent } from './issue-edit/issue-edit.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './auth-interceptor';
     IssueDetailComponent,
     IssueFormComponent,
     StatusFilterComponent,
-    IssueEditComponent
+    IssueEditComponent,
+    LoginComponent
   ],
   imports: [
     NgbModule,
