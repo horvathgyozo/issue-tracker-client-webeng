@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Issue } from './issue';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Apollo } from 'apollo-angular';
+import gql from 'graphql-tag';
+import { ApolloQueryResult } from 'apollo-client';
 
 const httpOptions = {
   headers: new HttpHeaders({ 
@@ -9,6 +12,9 @@ const httpOptions = {
   })
 };
 
+interface IssuesResult {
+  issues: Issue[]
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -17,11 +23,32 @@ export class IssueService {
   private issueUrl = '/api/issues';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private apollo: Apollo
   ) { }
 
   getIssues(): Promise<Issue[]> {
     return this.http.get<Issue[]>(this.issueUrl, httpOptions).toPromise();
+  }
+
+  getIssuesFromGraphQL() {
+    return this.apollo.watchQuery<IssuesResult>({
+      query: gql`
+        {
+          issues {
+            title
+            description
+            status
+            place
+            created_at
+            user {
+              username
+              role
+            }
+          }
+        }
+      `
+    });
   }
 
   getIssue(id: number): Promise<Issue> {

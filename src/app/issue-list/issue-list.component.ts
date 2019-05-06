@@ -19,8 +19,12 @@ export class IssueListComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.issues = await this.issueService.getIssues();
-      this.filterIssues(this.status);
+      // this.issues = await this.issueService.getIssues();
+      this.issueService.getIssuesFromGraphQL()
+      .valueChanges.subscribe(result => {
+        this.issues = result.data && result.data.issues;
+        this.filterIssues(this.status);
+      });
     } catch (e) {
       console.log(e);
     }
