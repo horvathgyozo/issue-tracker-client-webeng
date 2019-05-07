@@ -23,7 +23,8 @@ export class IssueDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.id = +id;
-      this.issue = await this.issueService.getIssue(this.id);
+      // this.issue = await this.issueService.getIssue(this.id);
+      this.issue = (await this.issueService.getIssueFromGraphQL(this.id)).data.issueById;
     }
   }
 
